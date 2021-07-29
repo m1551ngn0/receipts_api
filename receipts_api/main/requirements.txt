@@ -1,0 +1,7 @@
+psycopg2
+peewee
+fastapi
+redis
+pydantic
+uvicorn[standart]
+gunicorn
