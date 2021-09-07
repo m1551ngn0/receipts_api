@@ -8,15 +8,15 @@ cache = redis.StrictRedis(
 )
 
 
-def check_key(dict):
-    return cache.hgetall(dict)
+def check_key(key):
+    return cache.hgetall(key)
 
 
-def add_key(key, rec_num, reg_num, date, total):
+def add_key(key, receipt_num, registration_num, created_at, total):
     receipt = {
-        'rec_num': rec_num,
-        'reg_num': reg_num,
-        'date': f'{date}',
-        'total': f'{total}'
+        'receipt_num': receipt_num,
+        'registration_num': registration_num,
+        'total': f'{total}',
+        'created_at': f'{created_at}'        
     }
     return cache.hmset(key, receipt)

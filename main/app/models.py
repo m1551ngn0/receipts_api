@@ -1,13 +1,13 @@
-from peewee import CharField, Model, TimestampField
+from peewee import CharField, Model, DateTimeField
 
 from databases import database
 
 
 class Receipt(Model):
-    rec_num = CharField(unique=True)
-    reg_num = CharField()
+    receipt_num = CharField(unique=True)
+    registration_num = CharField()
     total = CharField()
-    date = TimestampField()
+    created_at = DateTimeField()
 
     class Meta:
         database = database.db

@@ -15,10 +15,10 @@ class PeeweeGetterDict(GetterDict):
 
 
 class ReceiptBase(BaseModel):
-    rec_num: str
-    reg_num: str
+    receipt_num: str
+    registration_num: str
     total: str
-    date: datetime.datetime
+    created_at: datetime.datetime
 
 
 class ReceiptCreate(ReceiptBase):
