@@ -1,40 +1,35 @@
 from app import models, schemas
-from datetime import datetime
 from databases import cache
 
 
 def get_receipt(receipt_id: int):
-    if cache.check_key(receipt_id) == {}:
-        result = models.Receipt.filter(models.Receipt.id == receipt_id).first()
+    check_result = cache.check_key(receipt_id)
+    result = models.Receipt.filter(models.Receipt.id == receipt_id).first()
+    if check_result == {}:
         if result is None:
             return result
         else:
             cache.add_key(
                 receipt_id,
-                result.rec_num,
-                result.reg_num,
+                result.receipt_num,
+                result.registration_num,
                 result.total,
-                result.date,
+                result.created_at,
             )
-    else:
-        pass
     print('This is get recipt func!')
-    return cache.check_key(receipt_id)
+    return result
 
 
 def delete_receipt(receipt_id: int):
     db_user = models.Receipt.filter(models.Receipt.id == receipt_id).first()
-    if db_user is None:
-        return None
-    else:
+    if db_user is not None:
         db_user.delete_instance()
-        print('This is delete func!')
-        return db_user
+        return
 
 
-def get_receipt_by_recnum(rec_num: str):
+def get_receipt_by_recnum(receipt_num: str):
     print('This is get by recnum func!')
-    return models.Receipt.filter(models.Receipt.rec_num == rec_num).first()
+    return models.Receipt.filter(models.Receipt.receipt_num == receipt_num).first()
 
 
 def get_receipts(skip: int = 0, limit: int = 100):
@@ -43,10 +38,10 @@ def get_receipts(skip: int = 0, limit: int = 100):
 
 def create_receipt(receipt: schemas.ReceiptCreate):
     db_receipt = models.Receipt(
-        rec_num=receipt.rec_num,
-        reg_num=receipt.reg_num,
+        receipt_num=receipt.receipt_num,
+        registration_num=receipt.registration_num,
         total=receipt.total,
-        date=receipt.date
+        created_at=receipt.created_at
     )
     db_receipt.save()
     print('This is create receipt func!')
