@@ -12,7 +12,7 @@ def check_key(key):
     return cache.hgetall(key)
 
 
-def add_key(key, receipt_num, registration_num, created_at, total):
+def add_key(key, receipt_num, registration_num, total, created_at):
     receipt = {
         'receipt_num': receipt_num,
         'registration_num': registration_num,
@@ -20,3 +20,7 @@ def add_key(key, receipt_num, registration_num, created_at, total):
         'created_at': f'{created_at}'        
     }
     return cache.hmset(key, receipt)
+
+
+def delete_key(key):
+    return cache.delete(key)

@@ -29,6 +29,9 @@ class ReceiptDelete(ReceiptBase):
     id: int
 
 
+class ReceiptByRecNum(BaseModel):
+    receipt_num: str
+
 class Receipt(ReceiptBase):
     id: int
 

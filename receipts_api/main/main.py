@@ -46,14 +46,6 @@ def create_receipt(receipt: schemas.ReceiptCreate):
     return crud.create_receipt(receipt=receipt)
 
 
-@app.get(
-    "/receipts/"
-)
-def read_receipts(skip: int = 0, limit: int = 100):
-    receipts = crud.get_receipts(skip=skip, limit=limit)
-    json_receipts = jsonable_encoder(receipts)
-    return JSONResponse(content=json_receipts)
-
 
 @app.get(
     "/receipts/{receipt_id}",
@@ -80,19 +72,16 @@ def delete_receipt(receipt_id: int):
             status_code=404,
             detail=f"Чек с  id = {receipt_id} не найден!"
         )
+
     crud.delete_receipt(receipt_id=receipt_id)
-    return HTTPException(
-        status_code=200,
-        detail=f'Чек успешно с id = {receipt_id} удалён!'
-    )
-    
+    return f'Чек успешно с id = {receipt_id} удалён!'
 
 
 @app.get(
-    "/receipts/{receipt_num}",
+    "/receipts/",
 )
-def get_by_recnum(receipt_num: str):
-    """receipt = crud.get_receipt_by_recnum(receipt_num=receipt_num)
+def get_by_recnum(rec_num: str):
+    receipt = crud.get_receipt_by_recnum(receipt_num=rec_num)
+    print('This is main by recnum func!')
     json_receipt = jsonable_encoder(receipt)
-    print('This is main by recnum func!')"""
-    return {"receipt_num": receipt_num}   #JSONResponse(json_receipt)
+    return JSONResponse(json_receipt)
